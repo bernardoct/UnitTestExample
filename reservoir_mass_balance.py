@@ -81,7 +81,7 @@ class Reservoir:
         evaporation = self.__evaporation_series[week] *\
             self.calculate_area(self.__stored_volume[week - 1])
         new_stored_volume = self.__stored_volume[week - 1] + upstream_flow +\
-            self.__inflow_series[week] - evaporation -\
+            self.__inflow_series[week] - evaporation +\
             self.__demand_series[week]
 
         release = 0
@@ -143,7 +143,7 @@ def generate_streamflow(n_weeks, sin_amplitude, log_mu, log_sigma):
 
     for i in range(n_weeks):
         # Transform standard normal into normal with specified sigma and mu.
-        streamflow = np.random.randn() * log_sigma + log_mu *\
+        streamflow = np.random.randn() * log_mu + log_sigma *\
             (1. + sin_amplitude * np.sin(2. * np.pi / 52 * (i % 52)))
         streamflows[i] = np.exp(streamflow)
 
